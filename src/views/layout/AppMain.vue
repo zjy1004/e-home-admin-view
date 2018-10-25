@@ -1,6 +1,6 @@
 <template>
-  <div>
-
+  <div class="app-main">
+    <router-view></router-view>
   </div>
 </template>
 
@@ -10,6 +10,11 @@ export default {
 }
 </script>
 
-<style scoped>
-
+<style scoped lang="scss">
+.app-main{
+  padding: 30px;
+  .el-card {
+    min-height: calc( 100vh  -  160px );
+  }
+}
 </style>

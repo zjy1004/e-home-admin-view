@@ -10,6 +10,27 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss">
+.fll {
+  float: left;
+}
+.flr {
+  float: right;
+}
+.clearfix {
+  &::after {
+    content: '';
+    clear: both;
+    display: block;
+  }
+}
+a{
+  text-decoration: none;
+  color: #fff;
+}
+  .table-item-img {
+    width: 80px;
+    height: 80px;
+  }
 
 </style>
