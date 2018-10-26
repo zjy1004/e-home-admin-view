@@ -32,5 +32,10 @@ a{
     width: 80px;
     height: 80px;
   }
-
+.el-menu{
+  border-right: none;
+}
+  .el-submenu .el-menu-item{
+    min-width: 0;
+  }
 </style>

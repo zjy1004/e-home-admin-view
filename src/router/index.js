@@ -54,6 +54,30 @@ export default new Router({
             title: '添加新闻'
           },
           component: () => import('@/views/news/addNews')
+        },
+        {
+          path: 'swiper',
+          name: 'swiper',
+          meta: {
+            title: '轮播图管理'
+          },
+          component: () => import('@/views/swiper/index')
+        },
+        {
+          path: 'editSwiper',
+          name: 'editSwiper',
+          meta: {
+            title: '编辑轮播图'
+          },
+          component: () => import('@/views/swiper/addSwiper')
+        },
+        {
+          path: 'addSwiper',
+          name: 'addSwiper',
+          meta: {
+            title: '添加轮播图'
+          },
+          component: () => import('@/views/swiper/addSwiper')
         }
       ]
     }
