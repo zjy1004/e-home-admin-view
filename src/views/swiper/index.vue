@@ -22,7 +22,7 @@
         <el-table-column label="操作" width="220">
           <template slot-scope="scope">
             <el-button type="primary" @click="handleSubmit(scope.row._id)" size="mini">编辑</el-button>
-            <el-button type="danger" size="mini">删除</el-button>
+            <el-button type="danger" @click="handleDel(scope.row._id)" size="mini">删除</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -48,6 +48,14 @@
       },
       handleSubmit(id) {
         this.$router.push(`/layout/editSwiper/?id=${id}`)
+      },
+      handleDel(id) {
+        this.$axios.delete(`/admin/swiper/${id}`).then(res => {
+          if (res.code == 200) {
+            this.$message.success(res.msg);
+            this.getData()
+          }
+        })
       }
     },
     created() {

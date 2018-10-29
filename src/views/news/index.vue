@@ -15,8 +15,8 @@
         <el-table-column label="分类" prop="type.title"></el-table-column>
         <el-table-column label="操作" width="220">
           <template slot-scope="scope">
-            <el-button type="primary" size="mini">查看详细</el-button>
-            <el-button type="danger" size="mini">删除</el-button>
+            <el-button type="primary" @click="handleDetail(scope.row._id)" size="mini">查看详细</el-button>
+            <el-button type="danger" @click="handleDel(scope.row._id)" size="mini">删除</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -39,6 +39,17 @@
             this.tableData = res.data
           }
         })
+      },
+      handleDel(id) {
+        this.$axios.delete(`/admin/news/${id}`).then(res => {
+          if (res.code == 200) {
+            this.$message.success(res.msg);
+            this.getData()
+          }
+        })
+      },
+      handleDetail(id) {
+
       }
     },
     created() {
