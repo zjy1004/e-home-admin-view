@@ -1,6 +1,6 @@
 <template>
   <div>
-    <quill-editor v-model="content"
+    <quill-editor v-model="formData.content"
                   ref="myQuillEditor"
                   @change="editChange($event)"
                   :options="editorOption">
@@ -20,10 +20,14 @@
     name: "QuillEditor",
     components: {quillEditor},
     props: {
-      content: ''
+      value: Object
     },
     data() {
       return{
+        formData: {
+          content: "",
+          contentText: ""
+        },
         token: '',
         // 富文本框参数设置
         editorOption: {
@@ -60,8 +64,9 @@
         })
       },
       editChange({ quill, html, text }) {
-        this.contentText = text;
-        this.$emit('change', this.value)
+        this.formData.contentText = text;
+        this.formData.contentText = this.formData.contentText.substring(0, 10) + "...";
+        this.$emit("input", {...this.formData});
       },
     },
     created() {
@@ -69,8 +74,7 @@
     },
     watch: {
       value(val) {
-        this.content = val;
-        this.contentText = val
+        return this.formData = val;
       }
     }
   }

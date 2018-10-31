@@ -20,11 +20,12 @@
           </el-select>
         </el-form-item>
         <el-form-item label="新闻内容" required>
-          <quill-editor v-model="formData.content"
-                        ref="myQuillEditor"
-                        @change="editChange($event)"
-                        :options="editorOption">
-          </quill-editor>
+          <!--<quill-editor v-model="formData.content"-->
+                        <!--ref="myQuillEditor"-->
+                        <!--@change="editChange($event)"-->
+                        <!--:options="editorOption">-->
+          <!--</quill-editor>-->
+          <QuillEditor v-model="richText"></QuillEditor>
         </el-form-item>
         <el-form-item label="新闻分类" required>
           <el-select v-model="formData.type">
@@ -43,16 +44,17 @@
 </template>
 
 <script>
+  import QuillEditor from '@/components/QuillEditor'
   import axios from 'axios'
-  import {quillEditor, Quill} from 'vue-quill-editor'
-  import {container, ImageExtend, QuillWatch} from 'quill-image-extend-module'
-  Quill.register('modules/ImageExtend', ImageExtend)
-  import 'quill/dist/quill.core.css'
-  import 'quill/dist/quill.snow.css'
-  import 'quill/dist/quill.bubble.css'
+  // import {quillEditor, Quill} from 'vue-quill-editor'
+  // import {container, ImageExtend, QuillWatch} from 'quill-image-extend-module'
+  // Quill.register('modules/ImageExtend', ImageExtend)
+  // import 'quill/dist/quill.core.css'
+  // import 'quill/dist/quill.snow.css'
+  // import 'quill/dist/quill.bubble.css'
   import UploadImg from '@/components/UploadImg'
   export default {
-    components: {quillEditor, UploadImg},
+    components: { UploadImg, QuillEditor},
     name: "addNews",
     data() {
       return {
@@ -65,33 +67,34 @@
           type: "",
           look_num: ""
         },
+        richText: {},
         users: [],
         token: '',
         categories: [],
         // 富文本框参数设置
-        editorOption: {
-          modules: {
-            ImageExtend: {
-              loading: true,
-              name: 'file',
-              action: 'https://upload-z1.qiniup.com',
-              response: (res) => {
-                return res.url
-              },
-              change: (xhr, formData) => {
-                formData.append('token', this.token)
-              } // 可选参数 每次选择图片触发，也可用来设置头部，但比headers多了一个参数，可设置formData
-            },
-            toolbar: {
-              container: container,
-              handlers: {
-                'image': function () {
-                  QuillWatch.emit(this.quill.id)
-                }
-              }
-            }
-          }
-        }
+        // editorOption: {
+        //   modules: {
+        //     ImageExtend: {
+        //       loading: true,
+        //       name: 'file',
+        //       action: 'https://upload-z1.qiniup.com',
+        //       response: (res) => {
+        //         return res.url
+        //       },
+        //       change: (xhr, formData) => {
+        //         formData.append('token', this.token)
+        //       } // 可选参数 每次选择图片触发，也可用来设置头部，但比headers多了一个参数，可设置formData
+        //     },
+        //     toolbar: {
+        //       container: container,
+        //       handlers: {
+        //         'image': function () {
+        //           QuillWatch.emit(this.quill.id)
+        //         }
+        //       }
+        //     }
+        //   }
+        // }
       }
     },
     methods: {
@@ -109,9 +112,9 @@
           }
         })
       },
-      editChange({ quill, html, text }) {
-        this.formData.contentText = text
-      },
+      // editChange({ quill, html, text }) {
+      //   this.formData.contentText = text
+      // },
       handleSubmit() {
         this.$axios.post('/admin/news', this.formData).then(res => {
           if (res.code == 200) {
@@ -132,7 +135,14 @@
       this.getUser();
       this.getToken();
       this.getCategory()
-    }
+    },
+    watch: {
+      richText(val) {
+        console.log(val);
+        (this.formData.contentText = val.contentText);
+          (this.formData.content = val.content);
+      }
+    },
   }
 </script>
 

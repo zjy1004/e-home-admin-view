@@ -2,7 +2,7 @@
   <div>
     <el-form>
       <el-form-item label="新闻内容" required>
-        <QuillEditor v-model="formData.content"></QuillEditor>
+        <QuillEditor v-model="richText"></QuillEditor>
       </el-form-item>
     </el-form>
   </div>
@@ -18,9 +18,17 @@
         formData: {
           content: '',
           contentText: ''
-        }
+        },
+        richText: {},
       }
-    }
+    },
+    watch: {
+      richText(val) {
+        console.log(val);
+        (this.formData.contentText = val.contentText);
+          (this.formData.content = val.content);
+      }
+    },
   }
 </script>
 
